@@ -1,33 +1,67 @@
-import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './App.css'
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import { TextureLoader } from "three";
+import { Canvas, useLoader } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+function Sphere(props) {
+  const [color] = useState(Math.random() * 0xffffff);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-        </a>
-        <a href="https://react.dev" target="_blank">
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <mesh {...props}>
+      <sphereGeometry args={[0.5]} />
+      <meshPhongMaterial color={color} />
+    </mesh>
+  );
 }
 
-export default App
+function SphereList({ list }) {
+  return (
+    <>
+      {list.map((sphere, i) => (
+        <Sphere key={i} position={[sphere.x, sphere.y, sphere.z]} />
+      ))}
+    </>
+  );
+}
+
+function Box(props) {
+  const texture = useLoader(TextureLoader, "textures/cube.jpg");
+  texture.anisotropy = 16
+
+  return (
+    <mesh {...props}>
+      <boxGeometry args={[10, 10, 10]} />
+      <meshLambertMaterial map={texture} />
+    </mesh>
+  );
+}
+
+function App() {
+  const [sphereList, setList] = useState([]);
+
+  return (
+    <Canvas camera={{ fov: 60, position: [25, 10, 10] }}>
+      <OrbitControls />
+      <Box
+        position={[0, 0, 0]}
+        onClick={(e) => {
+          setList(
+            sphereList.concat({
+              x: e.point.x,
+              y: e.point.y,
+              z: e.point.z,
+            })
+          );
+        }}
+      />
+      <SphereList list={sphereList} />
+      <ambientLight color={0x404040} intensity={3} />
+      <directionalLight position={[2, 2, 4]} intensity={3} color={0xffffff} />
+    </Canvas>
+  );
+}
+
+export default App;
