@@ -1,8 +1,10 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Ledas. ThreeJS. Тестовое задание.
+Demo: https://spankyman.aeza-virtual.duckdns.org/ledas/
+# Запуск
+```
+$ git clone https://github.com/spankyman125/ledas-threejs
+$ cd ledas-threejs
+$ npm install
+$ npm run dev
+```
+![screenshot](https://github.com/user-attachments/assets/e83d0c98-aea2-41d5-9789-c8cefe745f50)
